@@ -1,0 +1,31 @@
+{% extends "posts/post_base.html" %}
+
+{% block pre_post %}
+    {% if user.is_authenticated %}
+
+    <div class="col-4" style="margin-top: 100px;">
+
+        <img class="img-thumbnail" width="250px"  src="{{post_user.profile.profile_pic.url}}" alt="Oops! image not found">
+        <h2><a href="{% url 'posts:all_posts_user' username=post_user.username %}">@{{post_user.username}}</a> </h2>
+
+        {% if user == post_user %}
+            <a class="btn btn-primary" href="{% url 'accounts:profile_update' %}">Update profile</a>
+        {% endif %}
+
+        
+    </div>
+    {% endif %}
+  
+{% endblock pre_post %}
+
+{% block post_content %}
+{% if user.is_authenticated %}
+    <div class="col-8" style="margin-top: 20px;">
+        {%  for post in post_user.posts.all %}
+        {% include "posts/_post.html" %}
+        {% endfor %}
+
+    </div>
+  {% endif %}
+{% endblock post_content %}
+

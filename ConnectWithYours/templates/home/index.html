@@ -1,0 +1,27 @@
+{% extends "home/base.html" %}
+
+{% block body_block %}
+    <h1>Welcome to ConnectWithYours</h1>
+    
+    {% if user.is_authenticated %}
+        <h2>Welcome {{user.profile}}</h2>
+        <img src="{{user.profile.profile_pic.url}}" height="100px" width="100px" alt="oops">
+        <a class="btn btn-warning" href="{% url 'accounts:profile_update' %}">Update your profile</a>
+        <a class="btn btn-warning" href="{% url 'accounts:logout' %}">Logout</a>
+    {% else %}
+        <div class="row">
+            <div class="col-6">
+                <h2 style="color:blue;" >If you are already registered with us</h2>
+                <h4>Login here: <a class="btn btn-primary" href="{% url 'accounts:login' %}">Login</a></h4>
+                <h2 style="color: green;">If you are not registered with us: </h2>
+                <h4>Register here: <a class="btn btn-success" href="{% url 'accounts:register' %}">Register with us!</a></h4>
+            </div>
+            <div class="col-6" >
+                
+            </div>
+        </div>
+        
+        
+    {% endif %}
+  
+{% endblock body_block %}

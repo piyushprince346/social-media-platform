@@ -1,0 +1,32 @@
+<!-- no need to extend-->
+<div class="card" style="margin-top: 20px;">
+    <h3 class="card-header">{{post.content_html|safe}}</h3>
+    <div class="">
+        
+        <h5 class="">
+            <span class="username">
+                <a href="{% url 'posts:all_posts_user' username=post.user.username %}">
+                    @{{post.user.username}}
+                </a>
+            </span>
+            <time class="time">
+                <a href="{% url 'posts:post_details' pk=post.pk %}"><i>{{ post.created_on|date:"d M, Y  h:i a" }}</i></a>
+            </time>
+            {% if post.group %}
+            <span class="group-name">in <a href="{% url 'groups:group_details' slug=post.group.slug %}">{{ post.group.name }}</a></span>
+            {% endif %}
+        </h5>
+
+        <div class="media-footer">
+            {% if user.is_authenticated and post.user == user and not hide_delete %}
+            <a href="{% url 'posts:delete_post' pk=post.pk %}" title="delete" class="btn btn-sm btn-warning">
+                <span class="glyphicon glyphicon-remove text-danger" aria-hidden="true"></span>
+                <span class="text-danger icon-label">Delete</span>
+            </a>
+            {% endif %}
+        </div>
+
+         
+    </div>
+
+</div>

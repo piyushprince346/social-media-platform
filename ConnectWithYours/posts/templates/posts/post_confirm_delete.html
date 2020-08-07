@@ -1,0 +1,19 @@
+{% extends "posts/post_base.html" %}
+
+{% block post_content %}
+<div class="col-8">
+    <h2>Are you sure to delete this post..?</h2>
+    <div class="">
+        {% include 'posts/_post.html' with post=object hide_delete=True %}
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" class="btn btn-warning" value="Delete post">
+        <a class="btn btn-success" href="{%  url 'posts:post_details' pk=object.pk %}">Cancel</a>
+    </form>
+    
+    
+</div>
+
+  
+{% endblock post_content %}

@@ -1,0 +1,35 @@
+{% extends "posts/post_base.html" %}
+{% load bootstrap3 %}
+
+{% block pre_post %}
+
+<div class="col-4" style="margin-top: 30px;">
+    <div class="group-list-intro">
+        {% if user.is_authenticated %}
+        <img class="rounded-circle" height="150px" width="150px" src="{{user.profile.profile_pic.url}}"
+            alt="Oops!, image not found">
+        <h2><a href="{% url 'posts:all_posts_user' username=user.username %}">@{{user.username}}</a> </h2>
+        <h2>Create Post here</h2>
+        {% else %}
+        <h1>Login to create a new post</h1>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock pre_post %}
+
+{% block post_content %}
+<div class="col-8" style="margin-top: 50px;">
+    <div class="jumbotron post-form">
+        <h1>Create new post here: </h1>
+        <form method="POST">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <input type="submit" class="btn btn-success" value="Create Post">
+        </form>
+
+    </div>
+</div>
+
+{% endblock post_content %}
+

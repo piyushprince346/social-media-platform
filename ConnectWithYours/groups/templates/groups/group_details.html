@@ -1,0 +1,35 @@
+{% extends "groups/group_base.html" %}
+
+{% block pre_group %}
+    <div class="col-4 group-intro">
+        <h1>{{group.name}}</h1>
+        <h2>No. of members: {{group.members.count}}</h2>
+        <h4 class="group-description">Group description: {{group.description_html|safe }}</h4>
+        
+        {% if user in group.members.all %}
+        <a class="btn btn-warning" href="{% url 'groups:leave_group' slug=group.slug  %}">Leave group</a>
+        {% else %}
+        <a class="btn btn-primary" href="{% url 'groups:join_group' slug=group.slug %}">join group</a>
+        {% endif %}
+    </div>
+    
+{% endblock pre_group %}
+
+{% block group_content %}
+    <div class="col-8">
+        {% if user in group.members.all %}
+            {% if group.posts.count == 0 %}
+                <h2>No posts in this group yet </h2>
+            {% else %}
+                {% for post in group.posts.all %}
+                    {% include "posts/_post.html" %} <!-- include is like extends which can be used in the middle -->
+                {% endfor %}
+            {% endif %}
+        
+        {% else %}
+            <h1>Join the group to see posts of this group </h1>
+        {% endif %}
+
+    </div>
+  
+{% endblock group_content %}

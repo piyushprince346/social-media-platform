@@ -1,0 +1,27 @@
+{% extends "posts/post_base.html" %}
+
+{% block pre_post %}
+<div class="col-8">
+    
+    {% if user.is_authenticated %}
+        
+        {% for post in posts %}
+            {% if user in post.group.members.all %}
+                {% include "posts/_post.html" %}
+            {% endif %}
+        {% endfor %}
+        
+    {% endif %}
+</div>
+
+{% endblock pre_post %}
+
+{% block post_content %}
+
+    <div class="col-4" style="color: orange;">
+
+        <h2>Welcome @{{user.username}} </h2>
+        <h3>Join groups to see their posts..! <a href="{% url 'groups:group_list' %}">All groups</a></h3>
+    </div>
+  
+{% endblock post_content %}
